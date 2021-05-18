@@ -5,9 +5,28 @@ import Todo from "./components/Todo";
 import Form from "./components/Form";
 import FilterButton from "./components/FilterButton";
 
+// Filter map
+const FILTER_MAP = {
+  All: {
+    cb: () => true,
+    classNames: "btn--margin-right-s",
+  },
+  Active: {
+    cb: (task) => !task.completed,
+    classNames: "btn--margin-s",
+  },
+  Completed: {
+    cb: (task) => task.completed,
+    classNames: "btn--margin-left-s",
+  },
+};
+
+const FILTER_NAMES = Object.keys(FILTER_MAP);
+
 function App(props) {
   // State hooks
   const [tasks, setTasks] = useState(props.tasks);
+  const [filter, setFilter] = useState("All");
 
   /**
    * Add new tasks
@@ -52,15 +71,28 @@ function App(props) {
   }
 
   // List of tasks
-  const taskList = tasks.map((task) => (
-    <Todo
-      id={task.id}
-      name={task.name}
-      completed={task.completed}
-      key={task.id}
-      toggleTaskCompleted={toggleTaskCompleted}
-      deleteTask={deleteTask}
-      editTask={editTask}
+  const taskList = tasks
+    .filter(FILTER_MAP[filter].cb)
+    .map((task) => (
+      <Todo
+        id={task.id}
+        name={task.name}
+        completed={task.completed}
+        key={task.id}
+        toggleTaskCompleted={toggleTaskCompleted}
+        deleteTask={deleteTask}
+        editTask={editTask}
+      />
+    ));
+
+  // List of filter buttons
+  const filterList = FILTER_NAMES.map((name) => (
+    <FilterButton
+      key={name}
+      name={name}
+      isPressed={name === filter}
+      setFilter={setFilter}
+      classNames={FILTER_MAP[name].classNames}
     />
   ));
 
@@ -83,14 +115,7 @@ function App(props) {
           </div>
           {/* filter buttns */}
           <div className="todoapp__section">
-            <div className="filters btn-group">
-              <FilterButton
-                name="All"
-                classNames="btn--active btn--margin-right-s"
-              />
-              <FilterButton name="Active" classNames="btn--margin-s" />
-              <FilterButton name="Completed" classNames="btn--margin-left-s" />
-            </div>
+            <div className="filters btn-group">{filterList}</div>
           </div>
 
           {/* Todo counter */}
