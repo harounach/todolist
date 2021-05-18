@@ -22,7 +22,10 @@ const Todo = (props) => {
             <img className="btn__icon" src={EditIcon} alt="" />
             <span className="visually-hidden">Edit {props.name}</span>
           </button>
-          <button className="btn btn--40 btn--rounded btn--margin-right">
+          <button
+            className="btn btn--40 btn--rounded btn--margin-right"
+            onClick={() => props.deleteTask(props.id)}
+          >
             <img className="btn__icon" src={DeleteIcon} alt="" />
             <span className="visually-hidden">Delete {props.name}</span>
           </button>
