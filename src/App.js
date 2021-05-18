@@ -6,21 +6,48 @@ import Form from "./components/Form";
 import FilterButton from "./components/FilterButton";
 
 function App(props) {
+  // State hooks
   const [tasks, setTasks] = useState(props.tasks);
 
+  /**
+   * Add new tasks
+   * @param {string} name
+   */
   function addTask(name) {
     const newTask = { id: "todo-" + nanoid(), name: name, completed: false };
     setTasks([...tasks, newTask]);
   }
 
+  // Toggle tasks
+  function toggleTaskCompleted(id) {
+    const updatedTasks = tasks.map((task) => {
+      // if this task has the same ID as the edited task
+      if (id === task.id) {
+        // use object spread to make a new object
+        // whose `completed` prop has been inverted
+        return { ...task, completed: !task.completed };
+      }
+      return task;
+    });
+    setTasks(updatedTasks);
+  }
+
+  // List of tasks
   const taskList = tasks.map((task) => (
     <Todo
       id={task.id}
       name={task.name}
       completed={task.completed}
       key={task.id}
+      toggleTaskCompleted={toggleTaskCompleted}
     />
   ));
+
+  // Tasks counter heading
+  const tasksNoun = taskList.length !== 1 ? "tasks" : "task";
+  const headingText = `${taskList.length} ${tasksNoun} remaining`;
+
+  // Render app content
   return (
     <div className="page">
       <header className="page__header header">
@@ -47,7 +74,7 @@ function App(props) {
 
           {/* Todo counter */}
           <div className="todoapp__section">
-            <h2 className="todoapp__counter">4 tasks remaining</h2>
+            <h2 className="todoapp__counter">{headingText}</h2>
           </div>
 
           {/* todolist */}
