@@ -13,7 +13,10 @@ const Todo = (props) => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    props.editTask(props.id, newName);
+
+    if (newName) {
+      props.editTask(props.id, newName);
+    }
     setNewName("");
     setEditing(false);
   }
