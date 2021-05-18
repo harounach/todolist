@@ -1,9 +1,14 @@
-import EditIcon from "./images/edit_black_24dp.svg";
-import DeleteIcon from "./images/delete_black_24dp.svg";
+import Todo from "./components/Todo";
 
 function App(props) {
-  const subject = props.subject;
-  console.log(props);
+  const taskList = props.tasks.map((task) => (
+    <Todo
+      id={task.id}
+      name={task.name}
+      completed={task.completed}
+      key={task.id}
+    />
+  ));
   return (
     <div className="page">
       <header className="page__header header">
@@ -56,108 +61,7 @@ function App(props) {
 
           {/* todolist */}
           <div className="todoapp__section">
-            <ul className="todolist">
-              {/* Todo 1 */}
-              <li className="todo">
-                {/* Todo View */}
-                <div className="todo__view">
-                  <input
-                    id="todo__checkbox1"
-                    type="checkbox"
-                    className="todo__checkbox"
-                    defaultChecked={true}
-                  />
-                  <label className="todo__label" htmlFor="todo__checkbox1">
-                    Eat
-                  </label>
-                  <div className="btn-group btn-group--inline">
-                    <button className="btn btn--40 btn--rounded btn--margin-right-s">
-                      <img className="btn__icon" src={EditIcon} alt="" />
-                      <span className="visually-hidden">Edit Eat</span>
-                    </button>
-                    <button className="btn btn--40 btn--rounded btn--margin-right">
-                      <img className="btn__icon" src={DeleteIcon} alt="" />
-                      <span className="visually-hidden">Delete Eat</span>
-                    </button>
-                  </div>
-                </div>
-              </li>
-
-              {/* Todo 2 */}
-              <li className="todo">
-                {/* Todo View */}
-                <div className="todo__view">
-                  <input
-                    id="todo__checkbox2"
-                    type="checkbox"
-                    className="todo__checkbox"
-                  />
-                  <label className="todo__label" htmlFor="todo__checkbox2">
-                    Sleep
-                  </label>
-                  <div className="btn-group btn-group--inline">
-                    <button className="btn btn--40 btn--rounded btn--margin-right-s">
-                      <img className="btn__icon" src={EditIcon} alt="" />
-                      <span className="visually-hidden">Edit Sleep</span>
-                    </button>
-                    <button className="btn btn--40 btn--rounded btn--margin-right">
-                      <img className="btn__icon" src={DeleteIcon} alt="" />
-                      <span className="visually-hidden">Delete Sleep</span>
-                    </button>
-                  </div>
-                </div>
-              </li>
-
-              {/* Todo 3 */}
-              <li className="todo">
-                {/* Todo View */}
-                <div className="todo__view">
-                  <input
-                    id="todo__checkbox3"
-                    type="checkbox"
-                    className="todo__checkbox"
-                  />
-                  <label className="todo__label" htmlFor="todo__checkbox3">
-                    Run
-                  </label>
-                  <div className="btn-group btn-group--inline">
-                    <button className="btn btn--40 btn--rounded btn--margin-right-s">
-                      <img className="btn__icon" src={EditIcon} alt="" />
-                      <span className="visually-hidden">Edit Run</span>
-                    </button>
-                    <button className="btn btn--40 btn--rounded btn--margin-right">
-                      <img className="btn__icon" src={DeleteIcon} alt="" />
-                      <span className="visually-hidden">Delete Run</span>
-                    </button>
-                  </div>
-                </div>
-              </li>
-
-              {/* Todo 4 */}
-              <li className="todo">
-                {/* Todo View */}
-                <div className="todo__view">
-                  <input
-                    id="todo__checkbox4"
-                    type="checkbox"
-                    className="todo__checkbox"
-                  />
-                  <label className="todo__label" htmlFor="todo__checkbox4">
-                    Code
-                  </label>
-                  <div className="btn-group btn-group--inline">
-                    <button className="btn btn--40 btn--rounded btn--margin-right-s">
-                      <img className="btn__icon" src={EditIcon} alt="" />
-                      <span className="visually-hidden">Edit Code</span>
-                    </button>
-                    <button className="btn btn--40 btn--rounded btn--margin-right">
-                      <img className="btn__icon" src={DeleteIcon} alt="" />
-                      <span className="visually-hidden">Delete Code</span>
-                    </button>
-                  </div>
-                </div>
-              </li>
-            </ul>
+            <ul className="todolist">{taskList}</ul>
           </div>
         </div>
       </main>
