@@ -1,8 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Form = (props) => {
+  const [name, setName] = useState("");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (name) {
+      props.addTask(name);
+    }
+    setName("");
+  }
+
+  function handleChange(e) {
+    setName(e.target.value);
+  }
+
   return (
-    <form className="form">
+    <form className="form" onSubmit={handleSubmit}>
       <div className="form__section">
         <h2 className="form__label-wrapper">
           <label htmlFor="new-todo-input" className="form__label">
@@ -17,6 +31,8 @@ const Form = (props) => {
           className="form__input-control"
           name="text"
           autoComplete="off"
+          value={name}
+          onChange={handleChange}
         />
         <button type="submit" className="btn btn--primary btn--form">
           Add
